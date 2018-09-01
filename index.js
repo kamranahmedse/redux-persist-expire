@@ -10,11 +10,12 @@ import moment from 'moment';
 const transformPersistence = (inboundState, config) => {
   inboundState = inboundState || {};
 
-  // If given data does not have persistence configuration before
-  if (!inboundState[config.createdAtKey]) {
+  // If given data has the persisted time and configuration
+  // requires the refresher on updates to store, reset the persisted time
+  if (inboundState[config.persistedAtKey] && config.refreshOnUpdate) {
     inboundState = {
       ...inboundState,
-      [config.createdAtKey]: moment()
+      [config.persistedAtKey]: moment()
     };
   }
 
@@ -30,9 +31,9 @@ const transformPersistence = (inboundState, config) => {
 const transformRehydrate = (outboundState, config) => {
   outboundState = outboundState || {};
 
-  // If state has the created date, then check for the possible expiry
-  if (outboundState[config.createdAtKey]) {
-    const startTime = moment(outboundState[config.createdAtKey]);
+  // If state has the persisted date, then check for the possible expiry
+  if (outboundState[config.persistedAtKey]) {
+    const startTime = moment(outboundState[config.persistedAtKey]);
     const endTime = moment();
 
     const duration = moment.duration(endTime.diff(startTime));
@@ -40,9 +41,9 @@ const transformRehydrate = (outboundState, config) => {
 
     // If the state is older than the set expiry time,
     // reset it to initial state
-    if (seconds > config.seconds) {
+    if (seconds > config.expireSeconds) {
       return {
-        ...config.state
+        ...config.expiredState
       };
     }
   }
@@ -59,11 +60,14 @@ const transformRehydrate = (outboundState, config) => {
 function expireReducer(reducerKey, config = {}) {
   config = {
     // Key to be used for the time relative to which store is to be expired
-    createdAtKey: '__persisted_at',
+    persistedAtKey: '__persisted_at',
     // Seconds after which store will be expired
-    seconds: null,
+    expireSeconds: null,
     // State to be used for resetting e.g. provide initial reducer state
-    state: {},
+    expiredState: {},
+    // Resets the __persisted_at time to current time on
+    // any updates to the reducer
+    refreshOnUpdate: false,
     ...config
   };
 
