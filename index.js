@@ -1,5 +1,5 @@
-import { createTransform } from 'redux-persist';
 import moment from 'moment';
+import { createTransform } from 'redux-persist';
 
 /**
  * Transforms state on its way to being serialized and persisted
@@ -10,9 +10,11 @@ import moment from 'moment';
 const transformPersistence = (inboundState, config) => {
   inboundState = inboundState || {};
 
-  // If given data has the persisted time and configuration
-  // requires the refresher on updates to store, reset the persisted time
-  if (inboundState[config.persistedAtKey] && config.refreshOnUpdate) {
+  // If autoExpire is required i.e. user won't be setting the time
+  // then on each update change the `persistedAt` to be current time
+  // so that the rehydrater will pick it up based on this time if
+  // the record is not updated for some time
+  if (config.autoExpire) {
     inboundState = {
       ...inboundState,
       [config.persistedAtKey]: moment()
@@ -31,8 +33,8 @@ const transformPersistence = (inboundState, config) => {
 const transformRehydrate = (outboundState, config) => {
   outboundState = outboundState || {};
 
-  // If state has the persisted date, then check for the possible expiry
-  if (outboundState[config.persistedAtKey]) {
+  // Check for the possible expiry if state has the persisted date
+  if (config.expireSeconds && outboundState[config.persistedAtKey]) {
     const startTime = moment(outboundState[config.persistedAtKey]);
     const endTime = moment();
 
@@ -65,9 +67,9 @@ function expireReducer(reducerKey, config = {}) {
     expireSeconds: null,
     // State to be used for resetting e.g. provide initial reducer state
     expiredState: {},
-    // Resets the __persisted_at time to current time on
-    // any updates to the reducer
-    refreshOnUpdate: false,
+    // Use it if you don't want to manually set the time and want the store to
+    // be automatically expired if the record is not updated in the `expireSeconds` time
+    autoExpire: false,
     ...config
   };
 
