@@ -15,10 +15,9 @@ const transformPersistence = (inboundState, config) => {
   // so that the rehydrater will pick it up based on this time if
   // the record is not updated for some time
   if (config.autoExpire) {
-    inboundState = {
-      ...inboundState,
+    inboundState = Object.assign({}, inboundState, {
       [config.persistedAtKey]: moment()
-    };
+    });
   }
 
   return inboundState;
@@ -44,9 +43,7 @@ const transformRehydrate = (outboundState, config) => {
     // If the state is older than the set expiry time,
     // reset it to initial state
     if (seconds > config.expireSeconds) {
-      return {
-        ...config.expiredState
-      };
+      return Object.assign({}, config.expiredState);
     }
   }
 
@@ -60,7 +57,7 @@ const transformRehydrate = (outboundState, config) => {
  * @return {Transform<{}, any>}
  */
 function expireReducer(reducerKey, config = {}) {
-  config = {
+  const defaults = {
     // Key to be used for the time relative to which store is to be expired
     persistedAtKey: '__persisted_at',
     // Seconds after which store will be expired
@@ -69,9 +66,10 @@ function expireReducer(reducerKey, config = {}) {
     expiredState: {},
     // Use it if you don't want to manually set the time and want the store to
     // be automatically expired if the record is not updated in the `expireSeconds` time
-    autoExpire: false,
-    ...config
+    autoExpire: false
   };
+
+  config = Object.assign({}, defaults, config);
 
   return createTransform(
     // transform state on its way to being serialized and persisted.

@@ -4,7 +4,6 @@ Thumbs.db
 /node_modules
 /coverage
 /build
-/old
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -8,13 +8,16 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test": "mocha"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha && codecov"
   },
   "dependencies": {
     "moment": "^2.22.2",
+    "redux": "^4.0.0",
     "redux-persist": "^5.10.0"
   },
   "devDependencies": {
+    "codecov": "^3.0.4",
+    "istanbul": "^0.4.5",
     "mocha": "^5.2.0"
   }
 }
