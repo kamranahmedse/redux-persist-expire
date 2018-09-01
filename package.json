@@ -7,8 +7,14 @@
   "author": "Kamran Ahmed <kamranahmed.se@gmail.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "moment": "^2.22.2",
     "redux-persist": "^5.10.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }

@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { createTransform } from 'redux-persist';
+const moment = require('moment');
+const { createTransform } = require('redux-persist');
 
 /**
  * Transforms state on its way to being serialized and persisted
@@ -85,4 +85,4 @@ function expireReducer(reducerKey, config = {}) {
   );
 }
 
-export default expireReducer;
+module.exports = expireReducer;
