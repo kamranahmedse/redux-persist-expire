@@ -1,7 +1,13 @@
 # redux-persist-expire
+
+[![npm](https://img.shields.io/npm/v/@kamranahmedse/redux-persist-expire.svg?style=flat-square)](https://www.npmjs.com/package/redux-persist-expire)
+[![](https://img.shields.io/travis/kamranahmedse/redux-persist-expire/master.svg?style=flat-square)](http://travis-ci.org/kamranahmedse/redux-persist-expire)
+[![](https://img.shields.io/codecov/c/github/kamranahmedse/redux-persist-expire.svg?style=flat-square)](http://travis-ci.org/kamranahmedse/redux-persist-expire)
+[![](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://github.com/kamranahmedse/redux-persist-expire)
+
 > Create expiring storage for your Redux stores
 
-## Install
+## Installation
 
 ```javascript
 yarn add redux-persist-expire
@@ -12,8 +18,10 @@ yarn add redux-persist-expire
 Create a transform using `expireReducer(reducerKey, config)` method where `reducerKey` is the key used by the reducer and configuration options are listed below 
 
 ```javascript
-const persistedReducers = persistReducer(
-  {
+const expireReducer = require('redux-persist-expire');
+
+
+const persistedReducers = persistReducer({
     transforms: [
       expireReducer('preference', {
         persistedAtKey: 'createdAt',
