@@ -1,6 +1,6 @@
 # redux-persist-expire
 
-[![npm](https://badge.fury.io/js/driver.js.svg)](https://www.npmjs.com/package/redux-persist-expire)
+[![npm](https://badge.fury.io/js/redux-persist-expire.svg)](https://www.npmjs.com/package/redux-persist-expire)
 [![](https://img.shields.io/travis/kamranahmedse/redux-persist-expire/master.svg?style=flat-square)](http://travis-ci.org/kamranahmedse/redux-persist-expire)
 [![](https://img.shields.io/codecov/c/github/kamranahmedse/redux-persist-expire.svg?style=flat-square)](http://travis-ci.org/kamranahmedse/redux-persist-expire)
 [![](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://github.com/kamranahmedse/redux-persist-expire)
