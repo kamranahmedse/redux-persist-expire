@@ -29,11 +29,11 @@ const persistedReducers = persistReducer({
        // shown below are the available configurations with default values
        expireReducer('preference', {
          // (Optional) Key to be used for the time relative to which store is to be expired
-  .      persistedAtKey: '__persisted_at',
+         persistedAtKey: '__persisted_at',
          // (Required) Seconds after which store will be expired
          expireSeconds: null,
          // (Optional) State to be used for resetting e.g. provide initial reducer state
-  .      expiredState: {},
+         expiredState: {},
          // (Optional) Use it if you don't want to manually set the time and want the store to
          // be automatically expired if the record is not updated in the `expireSeconds` time
          autoExpire: false
