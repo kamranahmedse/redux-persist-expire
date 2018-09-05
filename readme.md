@@ -4,7 +4,7 @@
 [![](https://img.shields.io/travis/kamranahmedse/redux-persist-expire/master.svg?style=flat-square)](http://travis-ci.org/kamranahmedse/redux-persist-expire)
 [![](https://img.shields.io/codecov/c/github/kamranahmedse/redux-persist-expire.svg?style=flat-square)](http://travis-ci.org/kamranahmedse/redux-persist-expire)
 
-> Create expiring storage for your Redux stores
+> Expiring transformer for [redux-persist](https://github.com/rt2zz/redux-persist) – Create expiring storage for your Redux stores
 
 ## Installation
 
