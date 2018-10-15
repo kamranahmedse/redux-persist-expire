@@ -1,6 +1,6 @@
 {
   "name": "redux-persist-expire",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create expiring storage for your Redux stores",
   "main": "index.js",
   "repository": "https://github.com/kamranahmedse/redux-persist-expire",
