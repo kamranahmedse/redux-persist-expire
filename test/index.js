@@ -23,12 +23,16 @@ describe('redux-persist-expire', function () {
     const reducerKey = 'someReducer';
 
     const transform = expireReducer(reducerKey, { autoExpire: true });
+    const inboundDate = moment().valueOf();
     const inboundOutputState = transform.in(state, reducerKey);
+    const persistedDate = inboundOutputState.__persisted_at;
 
     // Check if it has the same keys and the __persisted_at key
     // Check if the __persisted_at has the correct current value
     assert.deepEqual(Object.keys(inboundOutputState), ['username', 'id', '__persisted_at']);
-    assert.equal(inboundOutputState.__persisted_at.format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+    assert.equal(inboundOutputState.username, 'redux');
+    assert.equal(inboundOutputState.id, 1);
+    assert.equal(true, persistedDate <= (inboundDate + 10));
     done();
   });
 
@@ -37,12 +41,44 @@ describe('redux-persist-expire', function () {
     const reducerKey = 'someReducer';
 
     const transform = expireReducer(reducerKey, { autoExpire: true, persistedAtKey: 'updatedAt' });
+    const inboundDate = moment().valueOf();
     const inboundOutputState = transform.in(state, reducerKey);
+    const persistedDate = inboundOutputState.updatedAt.valueOf();
 
     // Check if it has the same keys and the updatedAt key
     // Check if the updatedAt has the correct current value
     assert.deepEqual(Object.keys(inboundOutputState), ['username', 'id', 'updatedAt']);
-    assert.equal(inboundOutputState.updatedAt.format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+    assert.equal(inboundOutputState.username, 'redux');
+    assert.equal(inboundOutputState.id, 1);
+    assert.equal(true, persistedDate <= (inboundDate + 10));
+
+    done();
+  });
+
+  it('autoExpire – does not override the persisted date if date already present', function (done) {
+    const reducerKey = 'someReducer';
+
+    const transform = expireReducer(reducerKey, { autoExpire: true, persistedAtKey: 'updatedAt' });
+    const inboundDate = moment().valueOf();
+    const inboundOutputState = transform.in({ username: 'redux3', id: 13 }, reducerKey);
+    const persistedDate = inboundOutputState.updatedAt.valueOf();
+
+    // Check if it has the same keys and the updatedAt key
+    // Check if the updatedAt has the correct current value
+    assert.deepEqual(Object.keys(inboundOutputState), ['username', 'id', 'updatedAt']);
+    assert.equal(inboundOutputState.username, 'redux3');
+    assert.equal(inboundOutputState.id, 13);
+    assert.equal(true, persistedDate <= (inboundDate + 10));
+
+    // Update the state and date value should still be same
+    const inboundOutputState2 = transform.in({ username: 'redux35', id: 133 }, reducerKey);
+    const persistedDate2 = inboundOutputState2.updatedAt.valueOf();
+
+    assert.deepEqual(Object.keys(inboundOutputState2), ['username', 'id', 'updatedAt']);
+    assert.equal(inboundOutputState2.username, 'redux35');
+    assert.equal(inboundOutputState2.id, 133);
+    assert.equal(persistedDate2, persistedDate);
+
     done();
   });
 

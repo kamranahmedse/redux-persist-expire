@@ -14,7 +14,7 @@ const transformPersistence = (inboundState, config) => {
   // then on each update change the `persistedAt` to be current time
   // so that the rehydrater will pick it up based on this time if
   // the record is not updated for some time
-  if (config.autoExpire) {
+  if (config.autoExpire && !inboundState[config.persistedAtKey]) {
     inboundState = Object.assign({}, inboundState, {
       [config.persistedAtKey]: moment()
     });
@@ -57,6 +57,7 @@ const transformRehydrate = (outboundState, config) => {
  * @return {Transform<{}, any>}
  */
 function expireReducer(reducerKey, config = {}) {
+
   const defaults = {
     // Key to be used for the time relative to which store is to be expired
     persistedAtKey: '__persisted_at',
