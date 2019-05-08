@@ -57,7 +57,7 @@ Here is the configuration for the common usecases
 
 ```javascript
 // Reset `preference` key to empty object if it has not been updated for the past hour
-expireReducer('users', {
+expireReducer('preference', {
     expireSeconds: 3600
 })
 ```
@@ -66,7 +66,7 @@ expireReducer('users', {
 
 ```javascript
 // Reset `preference` key to given defaults if it has not been updated for the past hour
-expireReducer('users', {
+expireReducer('preference', {
     expireSeconds: 1800,
     expiredState: {
       viewType: 'list',
@@ -85,7 +85,7 @@ expireReducer('users', {
     expiredState: []        // Reset to empty array after expiry
 })
 
-// Note that in this case, you have to manually set the `loadedAt` in 
+// Note that in this case, you have to manually set the `loadedAt` in
 // this case e.g. your reducer might look like this
 ...
 case USERS_LOADED:
