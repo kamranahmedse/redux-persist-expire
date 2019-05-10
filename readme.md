@@ -34,8 +34,8 @@ const persistedReducers = persistReducer({
          expireSeconds: null,
          // (Optional) State to be used for resetting e.g. provide initial reducer state
          expiredState: {},
-         // (Optional) Use it if you don't want to manually set the time and want the store to
-         // be automatically expired if the record is not updated in the `expireSeconds` time
+         // (Optional) Use it if you don't want to manually set the time in the reducer i.e. at `persistedAtKey` 
+         // and want the store to  be automatically expired if the record is not updated in the `expireSeconds` time
          autoExpire: false
        })
        // You can add more `expireReducer` calls here for different reducers
