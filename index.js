@@ -1,4 +1,3 @@
-const moment = require('moment');
 const { createTransform } = require('redux-persist');
 
 /**
@@ -16,7 +15,7 @@ const transformPersistence = (inboundState, config) => {
   // the record is not updated for some time
   if (config.autoExpire && !inboundState[config.persistedAtKey]) {
     inboundState = Object.assign({}, inboundState, {
-      [config.persistedAtKey]: moment()
+      [config.persistedAtKey]: new Date().getTime()
     });
   }
 
@@ -34,11 +33,11 @@ const transformRehydrate = (outboundState, config) => {
 
   // Check for the possible expiry if state has the persisted date
   if (config.expireSeconds && outboundState[config.persistedAtKey]) {
-    const startTime = moment(outboundState[config.persistedAtKey]);
-    const endTime = moment();
+    const startTime = new Date(outboundState[config.persistedAtKey]).getTime();
+    const endTime = new Date().getTime();
 
-    const duration = moment.duration(endTime.diff(startTime));
-    const seconds = duration.asSeconds();
+    const duration = endTime - startTime;
+    const seconds = duration / 1000;
 
     // If the state is older than the set expiry time,
     // reset it to initial state

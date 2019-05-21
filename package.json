@@ -11,7 +11,6 @@
     "test": "istanbul cover node_modules/mocha/bin/_mocha && codecov"
   },
   "dependencies": {
-    "moment": "^2.24.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0"
   },
