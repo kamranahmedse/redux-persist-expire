@@ -15,7 +15,7 @@ const transformPersistence = (inboundState, config) => {
   // the record is not updated for some time
   if (config.autoExpire && !inboundState[config.persistedAtKey]) {
     inboundState = Object.assign({}, inboundState, {
-      [config.persistedAtKey]: new Date().getTime()
+      [config.persistedAtKey]: (new Date()).getTime()
     });
   }
 
@@ -33,8 +33,8 @@ const transformRehydrate = (outboundState, config) => {
 
   // Check for the possible expiry if state has the persisted date
   if (config.expireSeconds && outboundState[config.persistedAtKey]) {
-    const startTime = new Date(outboundState[config.persistedAtKey]).getTime();
-    const endTime = new Date().getTime();
+    const startTime = (new Date(outboundState[config.persistedAtKey])).getTime();
+    const endTime = (new Date()).getTime();
 
     const duration = endTime - startTime;
     const seconds = duration / 1000;

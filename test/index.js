@@ -22,7 +22,7 @@ describe('redux-persist-expire', function () {
     const reducerKey = 'someReducer';
 
     const transform = expireReducer(reducerKey, { autoExpire: true });
-    const inboundDate = new Date().getTime();
+    const inboundDate = (new Date()).getTime();
     const inboundOutputState = transform.in(state, reducerKey);
     const persistedDate = inboundOutputState.__persisted_at;
 
@@ -40,7 +40,7 @@ describe('redux-persist-expire', function () {
     const reducerKey = 'someReducer';
 
     const transform = expireReducer(reducerKey, { autoExpire: true, persistedAtKey: 'updatedAt' });
-    const inboundDate = new Date().getTime();
+    const inboundDate = (new Date()).getTime();
     const inboundOutputState = transform.in(state, reducerKey);
     const persistedDate = inboundOutputState.updatedAt;
 
@@ -58,7 +58,7 @@ describe('redux-persist-expire', function () {
     const reducerKey = 'someReducer';
 
     const transform = expireReducer(reducerKey, { autoExpire: true, persistedAtKey: 'updatedAt' });
-    const inboundDate = new Date().getTime();
+    const inboundDate = (new Date()).getTime();
     const inboundOutputState = transform.in({ username: 'redux3', id: 13 }, reducerKey);
     const persistedDate = inboundOutputState.updatedAt;
 
@@ -82,8 +82,8 @@ describe('redux-persist-expire', function () {
   });
 
   it('can expire the state after expireSeconds have passed', function (done) {
-    // Use the old date so that it gets reset
-    const state = { username: 'redux', id: 1, updatedAt: new Date(Date.now() - 1 * 1000) };
+    // Use the old date (-1 seconds) so that it gets reset
+    const state = { username: 'redux', id: 1, updatedAt: new Date(Date.now() - 1000) };
     const reducerKey = 'someReducer';
 
     const transform = expireReducer(reducerKey, { persistedAtKey: 'updatedAt', expireSeconds: 5 });
@@ -94,7 +94,8 @@ describe('redux-persist-expire', function () {
     const outboundOutputState1 = transform.out(state, reducerKey);
     assert.deepEqual(outboundOutputState1, state, '`out` does not reset the state before time has passed');
 
-    state.updatedAt = new Date(Date.now() - 10 * 1000)
+    // Set the date to be 10 seconds older
+    state.updatedAt = new Date(Date.now() - (10 * 1000));
 
     const outboundOutputState2 = transform.out(state, reducerKey);
     assert.deepEqual(outboundOutputState2, {}, '`out` resets the state after time has passed');
@@ -103,11 +104,11 @@ describe('redux-persist-expire', function () {
   });
 
   it('can expire the state to given state after expireSeconds have passed', function (done) {
-    // Use the old date so that it gets reset
+    // Use the old date (-1 second) so that it gets reset
     const state = {
       username: 'redux',
       id: 1,
-      updatedAt: new Date(Date.now() - 1 * 1000)
+      updatedAt: new Date(Date.now() - 1000)
     };
 
     const reducerKey = 'someReducer';
@@ -125,7 +126,7 @@ describe('redux-persist-expire', function () {
     const outboundOutputState1 = transform.out(state, reducerKey);
     assert.deepEqual(outboundOutputState1, state, '`out` does not reset the state before time has passed');
 
-    state.updatedAt = new Date(Date.now() - 60 * 1000)
+    state.updatedAt = new Date(Date.now() - (60 * 1000));
 
     const outboundOutputState2 = transform.out(state, reducerKey);
     assert.deepEqual(outboundOutputState2, { username: 'initial' }, '`out` resets the state after time has passed');
