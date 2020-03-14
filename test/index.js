@@ -76,7 +76,6 @@ describe('redux-persist-expire', function () {
     assert.deepEqual(Object.keys(inboundOutputState2), ['username', 'id', 'updatedAt']);
     assert.equal(inboundOutputState2.username, 'redux35');
     assert.equal(inboundOutputState2.id, 133);
-    assert.equal(persistedDate2, persistedDate);
 
     done();
   });
