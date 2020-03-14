@@ -11,12 +11,12 @@
     "test": "istanbul cover node_modules/mocha/bin/_mocha && codecov"
   },
   "dependencies": {
-    "redux": "^4.0.1",
-    "redux-persist": "^5.10.0"
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "codecov": "^3.5.0",
+    "codecov": "^3.6.5",
     "istanbul": "^0.4.5",
-    "mocha": "^6.1.4"
+    "mocha": "^7.1.0"
   }
 }
