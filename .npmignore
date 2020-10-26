@@ -2,4 +2,3 @@ test/
 coverage/
 .editorconfig
 .travis.yml
-readme.md
