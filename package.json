@@ -1,12 +1,13 @@
 {
   "name": "redux-persist-expire",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Create expiring storage for your Redux stores",
   "main": "index.js",
   "repository": "https://github.com/kamranahmedse/redux-persist-expire",
   "author": "Kamran Ahmed <kamranahmed.se@gmail.com>",
   "license": "MIT",
   "private": false,
+  "sideEffects": false,
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha && codecov"
   },
@@ -15,8 +16,8 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "codecov": "^3.6.5",
+    "codecov": "^3.8.0",
     "istanbul": "^0.4.5",
-    "mocha": "^7.1.0"
+    "mocha": "^8.2.0"
   }
 }
