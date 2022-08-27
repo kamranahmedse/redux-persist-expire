@@ -9,7 +9,7 @@
 ## Installation
 
 ```javascript
-yarn add redux-persist-expire
+npm install redux-persist-expire
 ```
 
 ## Usage
