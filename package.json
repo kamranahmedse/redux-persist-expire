@@ -19,6 +19,6 @@
   "devDependencies": {
     "codecov": "^3.8.0",
     "istanbul": "^0.4.5",
-    "mocha": "^8.2.0"
+    "mocha": "^10.2.0"
   }
 }
